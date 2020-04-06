@@ -15,37 +15,29 @@ public class CensusAnalyser {
     public int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException {
 
         this.checkValidCsvFile(csvFilePath);
-        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
-        ) {
-            Iterator<IndiaCensusCSV> censusCSVIterator = this.getIterator(reader, IndiaCensusCSV.class);
-            int numberOfEntries = 0;
 
-            Iterable<IndiaCensusCSV> indiaCensusCSVIterable = () -> censusCSVIterator;
+        Iterator<IndiaCensusCSV> censusCSVIterator = CsvFileBuilder.getIterator(csvFilePath, IndiaCensusCSV.class);
+        int numberOfEntries = 0;
 
-            numberOfEntries = (int) StreamSupport.stream(indiaCensusCSVIterable.spliterator(), false).count();
-            return numberOfEntries;
-        } catch (IOException e) {
-            throw new CensusAnalyserException(e.getMessage(),
-                    CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
-        }
+        Iterable<IndiaCensusCSV> indiaCensusCSVIterable = () -> censusCSVIterator;
+
+        numberOfEntries = (int) StreamSupport.stream(indiaCensusCSVIterable.spliterator(), false).count();
+        return numberOfEntries;
+
     }
 
     public int loadIndiaStateCodeData(String csvFilePath) throws CensusAnalyserException {
 
         this.checkValidCsvFile(csvFilePath);
-        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
-        ) {
-            Iterator<IndiaStateCodeCSV> stateCodeCSVIterator = this.getIterator(reader, IndiaStateCodeCSV.class);
-            int numberOfEntries = 0;
 
-            Iterable<IndiaStateCodeCSV> IndiaStateCodeCSVIterable = () -> stateCodeCSVIterator;
+        Iterator<IndiaStateCodeCSV> stateCodeCSVIterator = CsvFileBuilder.getIterator(csvFilePath, IndiaStateCodeCSV.class);
+        int numberOfEntries = 0;
 
-            numberOfEntries = (int) StreamSupport.stream(IndiaStateCodeCSVIterable.spliterator(), false).count();
-            return numberOfEntries;
-        } catch (IOException e) {
-            throw new CensusAnalyserException(e.getMessage(),
-                    CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
-        }
+        Iterable<IndiaStateCodeCSV> IndiaStateCodeCSVIterable = () -> stateCodeCSVIterator;
+
+        numberOfEntries = (int) StreamSupport.stream(IndiaStateCodeCSVIterable.spliterator(), false).count();
+        return numberOfEntries;
+
     }
 
     public void checkValidCsvFile(String csvFilePath) throws CensusAnalyserException {
@@ -55,20 +47,7 @@ public class CensusAnalyser {
         }
     }
 
-    public <T> Iterator getIterator(Reader reader, Class classFile) throws CensusAnalyserException {
-
-        try {
-            CsvToBeanBuilder<T> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
-            csvToBeanBuilder.withType(classFile);
-            csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
-            CsvToBean<T> csvToBean = csvToBeanBuilder.build();
-            Iterator<T> stateCodeCSVIterator = csvToBean.iterator();
-            return stateCodeCSVIterator;
-        }catch (RuntimeException e ){
-            if(e.getMessage().contains("header!")){
-                throw new CensusAnalyserException(e.getMessage(),
-                        CensusAnalyserException.ExceptionType.INVALID_FILE_HEADER);}
-            throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.INVALID_FILE_DELIMITER);
-        }
-    }
+//    public <T> Iterator getIterator(Reader reader, Class classFile) throws CensusAnalyserException {
+//
+//    }
 }
