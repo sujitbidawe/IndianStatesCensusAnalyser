@@ -13,23 +13,17 @@ import java.util.stream.StreamSupport;
 public class CensusAnalyser {
 
     public int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException {
-        if(!csvFilePath.contains(".csv")){
-            throw new CensusAnalyserException("Invalid file type", CensusAnalyserException.ExceptionType.INVALID_FILE_TYPE);
-        }
-        try {
-            Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
-            CsvToBeanBuilder<IndiaCensusCSV> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
-            csvToBeanBuilder.withType(IndiaCensusCSV.class);
-            csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
-            CsvToBean<IndiaCensusCSV> csvToBean = csvToBeanBuilder.build();
-            Iterator<IndiaCensusCSV> censusCSVIterator = csvToBean.iterator();
 
-            int namOfEateries = 0;
+        this.checkValidCsvFile(csvFilePath);
+        try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
+        ) {
+            Iterator<IndiaCensusCSV> censusCSVIterator = this.getIterator(reader, IndiaCensusCSV.class);
+            int numberOfEntries = 0;
 
             Iterable<IndiaCensusCSV> indiaCensusCSVIterable = () -> censusCSVIterator;
 
-            namOfEateries = (int) StreamSupport.stream(indiaCensusCSVIterable.spliterator(), false).count();
-            return namOfEateries;
+            numberOfEntries = (int) StreamSupport.stream(indiaCensusCSVIterable.spliterator(), false).count();
+            return numberOfEntries;
         } catch (IOException e) {
             throw new CensusAnalyserException(e.getMessage(),
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
@@ -42,23 +36,17 @@ public class CensusAnalyser {
     }
 
     public int loadIndiaStateCodeData(String csvFilePath) throws CensusAnalyserException {
-        if(!csvFilePath.contains(".csv")){
-            throw new CensusAnalyserException("Invalid file type", CensusAnalyserException.ExceptionType.INVALID_FILE_TYPE);
-        }
-        try {
-            Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
-            CsvToBeanBuilder<IndiaStateCodeCSV> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
-            csvToBeanBuilder.withType(IndiaStateCodeCSV.class);
-            csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
-            CsvToBean<IndiaStateCodeCSV> csvToBean = csvToBeanBuilder.build();
-            Iterator<IndiaStateCodeCSV> stateCodeCSVIterator = csvToBean.iterator();
 
-            int namOfEateries = 0;
+        this.checkValidCsvFile(csvFilePath);
+        try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
+        ) {
+            Iterator<IndiaStateCodeCSV> stateCodeCSVIterator = this.getIterator(reader, IndiaStateCodeCSV.class);
+            int numberOfEntries = 0;
 
             Iterable<IndiaStateCodeCSV> IndiaStateCodeCSVIterable = () -> stateCodeCSVIterator;
 
-            namOfEateries = (int) StreamSupport.stream(IndiaStateCodeCSVIterable.spliterator(), false).count();
-            return namOfEateries;
+            numberOfEntries = (int) StreamSupport.stream(IndiaStateCodeCSVIterable.spliterator(), false).count();
+            return numberOfEntries;
         } catch (IOException e) {
             throw new CensusAnalyserException(e.getMessage(),
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
@@ -68,5 +56,22 @@ public class CensusAnalyser {
                         CensusAnalyserException.ExceptionType.INVALID_FILE_HEADER);}
             throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.INVALID_FILE_DELIMITER);
         }
+    }
+
+    public void checkValidCsvFile(String csvFilePath) throws CensusAnalyserException {
+
+        if(!csvFilePath.contains(".csv")){
+            throw new CensusAnalyserException("Invalid file type", CensusAnalyserException.ExceptionType.INVALID_FILE_TYPE);
+        }
+    }
+
+    public <T> Iterator getIterator(Reader reader, Class classFile){
+
+        CsvToBeanBuilder<T> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
+        csvToBeanBuilder.withType(classFile);
+        csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
+        CsvToBean<T> csvToBean = csvToBeanBuilder.build();
+        Iterator<T> stateCodeCSVIterator = csvToBean.iterator();
+        return stateCodeCSVIterator;
     }
 }
