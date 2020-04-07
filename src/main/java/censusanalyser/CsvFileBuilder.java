@@ -2,16 +2,14 @@ package censusanalyser;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-
-import java.io.IOException;
 import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Iterator;
 
-public class CsvFileBuilder {
-    public static <T> Iterator getIterator(String csvFilePath, Class classFile) throws CensusAnalyserException {
-        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))){
+public class CsvFileBuilder implements IcsvBuilderFactory{
+
+    public <T> Iterator getIterator(Reader reader, Class classFile) throws CensusAnalyserException {
+
+        try {
 
              CsvToBeanBuilder<T> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
              csvToBeanBuilder.withType(classFile);
@@ -25,8 +23,8 @@ public class CsvFileBuilder {
             if(e.getMessage().contains("header!")){
                 throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.INVALID_FILE_HEADER);}
             throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.INVALID_FILE_DELIMITER);
-        } catch (IOException e) {
-            throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
-        }
+        } //catch (IOException e) {
+           // throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
+       // }
     }
 }
