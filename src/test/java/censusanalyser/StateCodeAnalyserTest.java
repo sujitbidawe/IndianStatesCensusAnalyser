@@ -17,9 +17,9 @@ public class StateCodeAnalyserTest {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             int numOfRecords = censusAnalyser.loadIndiaStateCodeData(INDIA_STATE_CODE_CSV_FILE_PATH);
             System.out.println(numOfRecords);
-            Assert.assertEquals(37,numOfRecords);
+           Assert.assertEquals(37,numOfRecords);
         } catch (CensusAnalyserException e) {
-            e.printStackTrace();
+
         }
     }
 
