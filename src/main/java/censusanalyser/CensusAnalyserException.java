@@ -1,5 +1,7 @@
 package censusanalyser;
 
+import com.bl.csvbuilder.CsvFileBuilderException;
+
 public class CensusAnalyserException extends Exception {
 
     enum ExceptionType {
@@ -14,8 +16,9 @@ public class CensusAnalyserException extends Exception {
         this.type = type;
     }
 
-    public CensusAnalyserException(String message, ExceptionType type, Throwable cause) {
-        super(message, cause);
-        this.type = type;
+    public CensusAnalyserException(String message, CsvFileBuilderException.ExceptionType type) {
+        super(message);
+        this.type = ExceptionType.valueOf(type.name());
     }
+
 }
