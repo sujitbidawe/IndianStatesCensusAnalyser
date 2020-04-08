@@ -19,7 +19,6 @@ public class StateCodeAnalyserTest {
             System.out.println(numOfRecords);
            Assert.assertEquals(37,numOfRecords);
         } catch (CensusAnalyserException e) {
-
         }
     }
 
