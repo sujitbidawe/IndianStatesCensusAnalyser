@@ -1,5 +1,6 @@
 package censusanalyser;
 
+import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,7 +13,7 @@ public class StateCodeAnalyserTest {
     private static final String WRONG_CSV_FILE_HEADER = "./src/test/resources/StateCodeInvalidHeader.csv";
 
     @Test
-    public void givenIndianCensusCSVFileReturnsCorrectRecords() {
+    public void givenIndiaStateCodeCSVFileReturnsCorrectRecords() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             int numOfRecords = censusAnalyser.loadIndiaStateCodeData(INDIA_STATE_CODE_CSV_FILE_PATH);
@@ -23,7 +24,7 @@ public class StateCodeAnalyserTest {
     }
 
     @Test
-    public void givenIndiaCensusData_WithWrongFile_ShouldThrowException() {
+    public void givenIndiaStateCodeData_WithWrongFile_ShouldThrowException() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             censusAnalyser.loadIndiaStateCodeData(WRONG_CSV_FILE_PATH);
@@ -33,7 +34,7 @@ public class StateCodeAnalyserTest {
     }
 
     @Test
-    public void givenIndiaCensusData_WithWrongFileType_ShouldThrowException() {
+    public void givenIndiaStateCodeData_WithWrongFileType_ShouldThrowException() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             censusAnalyser.loadIndiaStateCodeData(WRONG_CSV_FILE_TYPE);
@@ -43,7 +44,7 @@ public class StateCodeAnalyserTest {
     }
 
     @Test
-    public void givenIndiaCensusData_WithWrongFileDelimiter_ShouldThrowException() {
+    public void givenIndiaStateCodeData_WithWrongFileDelimiter_ShouldThrowException() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             censusAnalyser.loadIndiaStateCodeData(WRONG_CSV_FILE_DELIMITER);
@@ -53,7 +54,7 @@ public class StateCodeAnalyserTest {
     }
 
     @Test
-    public void givenIndiaCensusData_WithWrongFileHeader_ShouldThrowException() {
+    public void givenIndiaStateCodeData_WithWrongFileHeader_ShouldThrowException() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             censusAnalyser.loadIndiaStateCodeData(WRONG_CSV_FILE_HEADER);
@@ -61,4 +62,5 @@ public class StateCodeAnalyserTest {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.INVALID_FILE_HEADER,e.type);
         }
     }
+
 }
