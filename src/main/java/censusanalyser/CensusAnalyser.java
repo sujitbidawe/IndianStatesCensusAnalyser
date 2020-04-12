@@ -1,6 +1,5 @@
 package censusanalyser;
 
-import com.bl.csvbuilder.CsvBuilder;
 import com.bl.csvbuilder.CsvFileBuilderException;
 import com.bl.csvbuilder.IcsvBuilder;
 import com.google.gson.Gson;
@@ -10,9 +9,7 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 public class CensusAnalyser {
 
@@ -55,7 +52,7 @@ public class CensusAnalyser {
             IcsvBuilder csvBuilderFactory = CsvBuilderFactory.getCsvBuilder();
             List<IndiaCensusCSV> csvFileList = csvBuilderFactory.getList(reader, IndiaCensusCSV.class);
             Comparator<IndiaCensusCSV> censusCSVComparator = Comparator.comparing(census -> census.state);
-            this.sort(csvFileList, censusCSVComparator);
+            this.sortCensusData(csvFileList, censusCSVComparator);
             String sortedStateJsonData = new Gson().toJson(csvFileList);
             return sortedStateJsonData;
         }catch (IOException e) {
@@ -71,7 +68,7 @@ public class CensusAnalyser {
             IcsvBuilder csvBuilderFactory = CsvBuilderFactory.getCsvBuilder();
             List<IndiaStateCodeCSV> csvFileList = csvBuilderFactory.getList(reader, IndiaStateCodeCSV.class);
             Comparator<IndiaStateCodeCSV> stateCSVComparator = Comparator.comparing(census -> census.stateCode);
-            this.sort2(csvFileList, stateCSVComparator);
+            this.sortStateCodeData(csvFileList, stateCSVComparator);
             String sortedStateJsonData = new Gson().toJson(csvFileList);
             return sortedStateJsonData;
         }catch (IOException e) {
@@ -81,7 +78,7 @@ public class CensusAnalyser {
         }
     }
 
-    private void sort(List<IndiaCensusCSV>censusList, Comparator<IndiaCensusCSV> censusCSVComparator){
+    private void sortCensusData(List<IndiaCensusCSV>censusList, Comparator<IndiaCensusCSV> censusCSVComparator){
         for (int i = 0; i < censusList.size() - 1; i++){
             for (int j = 0; j < censusList.size() - i - 1; j++) {
                 IndiaCensusCSV census1 = censusList.get(j);
@@ -94,7 +91,7 @@ public class CensusAnalyser {
         }
     }
 
-    private void sort2(List<IndiaStateCodeCSV>censusList, Comparator<IndiaStateCodeCSV> censusCSVComparator){
+    private void sortStateCodeData(List<IndiaStateCodeCSV>censusList, Comparator<IndiaStateCodeCSV> censusCSVComparator){
         for (int i = 0; i < censusList.size() - 1; i++){
             for (int j = 0; j < censusList.size() - i - 1; j++) {
                 IndiaStateCodeCSV census1 = censusList.get(j);
