@@ -77,7 +77,7 @@ public class CensusAnalyser {
 
     public String getStateCodeWiseSortedData(String csvFilePath) throws CensusAnalyserException{
         loadIndiaStateCodeData(csvFilePath);
-        if (censusCsvFileList == null || censusCsvFileList.size() == 0) {
+        if (stateCsvFileList == null || stateCsvFileList.size() == 0) {
             throw new CensusAnalyserException("NO_CENSUS_DATA", CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         }
         Comparator<IndiaStateCodeCSV> stateCSVComparator = Comparator.comparing(census -> census.stateCode);
