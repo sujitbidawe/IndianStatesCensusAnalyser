@@ -17,7 +17,6 @@ public class StateCodeAnalyserTest {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             int numOfRecords = censusAnalyser.loadIndiaStateCodeData(INDIA_STATE_CODE_CSV_FILE_PATH);
-            System.out.println(numOfRecords);
            Assert.assertEquals(37,numOfRecords);
         } catch (CensusAnalyserException e) {
         }
@@ -70,7 +69,7 @@ public class StateCodeAnalyserTest {
             IndiaStateCodeCSV[] stateCSV = new Gson().fromJson(sortedData, IndiaStateCodeCSV[].class);
             Assert.assertEquals("AD", stateCSV[0].stateCode);
         } catch (CensusAnalyserException e) {
-            Assert.assertEquals(CensusAnalyserException.ExceptionType.INVALID_FILE_HEADER,e.type);
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.type);
         }
     }
 
@@ -82,7 +81,7 @@ public class StateCodeAnalyserTest {
             IndiaStateCodeCSV[] stateCSV = new Gson().fromJson(sortedData, IndiaStateCodeCSV[].class);
             Assert.assertEquals("WB", stateCSV[36].stateCode);
         } catch (CensusAnalyserException e) {
-            Assert.assertEquals(CensusAnalyserException.ExceptionType.INVALID_FILE_HEADER,e.type);
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.type);
         }
     }
 
