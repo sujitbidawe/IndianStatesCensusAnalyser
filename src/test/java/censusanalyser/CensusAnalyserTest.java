@@ -70,7 +70,6 @@ public class CensusAnalyserTest {
             Assert.assertEquals("Andhra Pradesh", censusCSV[0].state);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.type);
-
         }
     }
 
@@ -83,7 +82,6 @@ public class CensusAnalyserTest {
             Assert.assertEquals("West Bengal", censusCSV[28].state);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.type);
-
         }
     }
 }
