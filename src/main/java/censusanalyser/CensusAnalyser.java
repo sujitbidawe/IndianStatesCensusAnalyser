@@ -65,21 +65,21 @@ public class CensusAnalyser {
     }
 
     public String getStateWiseSortedData(String csvFilePath) throws CensusAnalyserException {
+        loadIndiaCensusData(csvFilePath);
         if (censusCsvFileList == null || censusCsvFileList.size() == 0) {
             throw new CensusAnalyserException("NO_CENSUS_DATA", CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         }
-        loadIndiaCensusData(csvFilePath);
         Comparator<IndiaCensusCSV> censusCSVComparator = Comparator.comparing(census -> census.state);
         this.sortData(censusCsvFileList, censusCSVComparator);
         String sortedStateJsonData = new Gson().toJson(censusCsvFileList);
         return sortedStateJsonData;
     }
 
-    public String getStateCodeWiseSortedData(String csvFilePath) throws CensusAnalyserException {
+    public String getStateCodeWiseSortedData(String csvFilePath) throws CensusAnalyserException{
+        loadIndiaStateCodeData(csvFilePath);
         if (censusCsvFileList == null || censusCsvFileList.size() == 0) {
             throw new CensusAnalyserException("NO_CENSUS_DATA", CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         }
-        loadIndiaStateCodeData(csvFilePath);
         Comparator<IndiaStateCodeCSV> stateCSVComparator = Comparator.comparing(census -> census.stateCode);
         this.sortData(stateCsvFileList, stateCSVComparator);
         String sortedStateCodeJsonData = new Gson().toJson(stateCsvFileList);
