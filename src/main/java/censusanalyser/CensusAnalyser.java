@@ -69,6 +69,18 @@ public class CensusAnalyser {
         return sortedStateJsonData;
     }
 
+    public String getPopulationWiseSortedData(String csvFilePath) throws CensusAnalyserException {
+        loadIndiaCensusData(csvFilePath);
+        if (csvFileList == null || csvFileList.size() == 0) {
+            throw new CensusAnalyserException("NO_CENSUS_DATA", CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
+        }
+        Comparator<CensusDAO> censusComparator = Comparator.comparing(censusDAO -> censusDAO.getPopulation());
+        this.sortData(censusComparator);
+        Collections.reverse(csvFileList);
+        String sortedStateJsonData = new Gson().toJson(csvFileList);
+        return sortedStateJsonData;
+    }
+
     public String getStateCodeWiseSortedData(String csvFilePath) throws CensusAnalyserException{
         loadIndiaStateCodeData(csvFilePath);
         if (csvFileList == null || csvFileList.size() == 0) {
