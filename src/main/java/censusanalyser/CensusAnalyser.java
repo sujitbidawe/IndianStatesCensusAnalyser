@@ -74,16 +74,40 @@ public class CensusAnalyser<E> {
         this.sortData(censusComparator);
         Collections.reverse(csvFileList);
         String sortedStateJsonData = new Gson().toJson(csvFileList);
+
         return sortedStateJsonData;
     }
 
-    public  String getStatCodeWiseSortedCensusData(Country country, String csvFilePath) throws CensusAnalyserException {
+    public  String getStateCodeWiseSortedCensusData(Country country, String csvFilePath) throws CensusAnalyserException {
         loadCensusData(country, csvFilePath);
         if (csvFileList == null || csvFileList.size() == 0) {
             throw new CensusAnalyserException("NO_CENSUS_DATA", CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         }
         Comparator<CensusDAO> stateCSVComparator = Comparator.comparing(censusDAO -> censusDAO.getStateCode());
         this.sortData(stateCSVComparator);
+        String sortedStateCodeJsonData = new Gson().toJson(csvFileList);
+        return sortedStateCodeJsonData;
+    }
+
+    public String getStateIDWiseSortedCensusData(Country country, String csvFilePath) throws CensusAnalyserException {
+        loadCensusData(country, csvFilePath);
+        if (csvFileList == null || csvFileList.size() == 0) {
+            throw new CensusAnalyserException("NO_CENSUS_DATA", CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
+        }
+        Comparator<CensusDAO> stateCSVComparator = Comparator.comparing(censusDAO -> censusDAO.getStateID());
+        this.sortData(stateCSVComparator);
+        String sortedStateCodeJsonData = new Gson().toJson(csvFileList);
+        return sortedStateCodeJsonData;
+    }
+
+    public String getHousingUnitsWiseSortedCensusData(Country country, String csvFilePath) throws CensusAnalyserException {
+        loadCensusData(country, csvFilePath);
+        if (csvFileList == null || csvFileList.size() == 0) {
+            throw new CensusAnalyserException("NO_CENSUS_DATA", CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
+        }
+        Comparator<CensusDAO> stateCSVComparator = Comparator.comparing(censusDAO -> censusDAO.getHousingUnits());
+        this.sortData(stateCSVComparator);
+        Collections.reverse(csvFileList);
         String sortedStateCodeJsonData = new Gson().toJson(csvFileList);
         return sortedStateCodeJsonData;
     }
