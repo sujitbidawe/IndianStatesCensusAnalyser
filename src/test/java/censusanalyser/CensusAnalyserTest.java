@@ -136,12 +136,73 @@ public class CensusAnalyserTest {
     }
 
     @Test
-    public void givenUSCensusData_ShouldAscendinglySortedResult() {
+    public void givenUSCensusData_WhenSortedOnState_ShouldAscendinglySortedResult() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
-            String stateNameWiseSortedCensusData = censusAnalyser.getStateWiseSortedData(US, US_CENSUS_CSV_FILE_PATH);
-            USCensusCSV[] censusCSV = new Gson().fromJson(stateNameWiseSortedCensusData, USCensusCSV[].class);
+            String sortedData = censusAnalyser.getStateWiseSortedData(US, US_CENSUS_CSV_FILE_PATH);
+            USCensusCSV[] censusCSV = new Gson().fromJson(sortedData, USCensusCSV[].class);
             Assert.assertEquals("Alabama", censusCSV[0].getState());
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenUSCensusData_WhenSortedOnPopulation_ShouldAscendinglySortedResult() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            String sortedData = censusAnalyser.getPopulationWiseSortedCensusData(US, US_CENSUS_CSV_FILE_PATH);
+            USCensusCSV[] censusCSV = new Gson().fromJson(sortedData, USCensusCSV[].class);
+            Assert.assertEquals(37253956, censusCSV[0].getPopulation());
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenUSCensusData_WhenSortedOnStateID_ShouldAscendinglySortedResult() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            String sortedData = censusAnalyser.getStateIDWiseSortedCensusData(US, US_CENSUS_CSV_FILE_PATH);
+            USCensusCSV[] censusCSV = new Gson().fromJson(sortedData, USCensusCSV[].class);
+            Assert.assertEquals("AK", censusCSV[0].getStateID());
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenUSCensusData_WhenSortedOnPopulationDensity_ShouldAscendinglySortedResult() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            String stateNameWiseSortedCensusData = censusAnalyser.getPopulationDensityWiseSortedCensusData(US, US_CENSUS_CSV_FILE_PATH);
+            USCensusCSV[] censusCSV = new Gson().fromJson(stateNameWiseSortedCensusData, USCensusCSV[].class);
+            Assert.assertEquals(3805.61, censusCSV[0].getPopulationDensity(), 0.0);
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenUSCensusData_WhenSortedOnArea_ShouldReturnDescendinglySortedResult() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            String sortedData = censusAnalyser.getAreaWiseSortedCensusData(US, US_CENSUS_CSV_FILE_PATH);
+            USCensusCSV[] censusCSV = new Gson().fromJson(sortedData, USCensusCSV[].class);
+            System.out.println(censusCSV[0].getAreaInSqKm());
+            Assert.assertEquals(1723338.01, censusCSV[0].getAreaInSqKm(), 0.0);
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.type);
+        }
+    }
+
+    @Test
+    public void givenUSCensusData_WhenSortedOnHousingUnits_ShouldAscendinglySortedResult() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            String sortedData = censusAnalyser.getHousingUnitsWiseSortedCensusData(US, US_CENSUS_CSV_FILE_PATH);
+            USCensusCSV[] censusCSV = new Gson().fromJson(sortedData, USCensusCSV[].class);
+            Assert.assertEquals(13680081, censusCSV[0].getHousingUnits());
         } catch (CensusAnalyserException e) {
             e.printStackTrace();
         }
