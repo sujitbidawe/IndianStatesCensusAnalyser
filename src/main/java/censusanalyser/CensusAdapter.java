@@ -2,10 +2,7 @@ package censusanalyser;
 
 import com.bl.csvbuilder.CsvFileBuilderException;
 import com.bl.csvbuilder.IcsvBuilder;
-import com.bl.csvbuilder.CsvBuilder;
 
-
-import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -16,11 +13,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.StreamSupport;
 
-import static censusanalyser.CsvBuilderFactory.getCsvBuilder;
-import static java.nio.file.Files.newBufferedReader;
-
 public abstract class CensusAdapter {
-    public abstract Map<String, CensusDAO> loadCensusData(String... csvFilePath) throws CensusAnalyserException;
+    public abstract Map<String, CensusDAO> loadCensusData(String csvFilePath) throws CensusAnalyserException;
 
     public Map<String, CensusDAO> csvFileMap = new HashMap();
 
