@@ -137,4 +137,17 @@ public class CensusAnalyserTest {
             Assert.assertEquals(51,numOfRecords);
         } catch (CensusAnalyserException e) { }
     }
+
+    @Test
+    public void givenUSCensusData_ShouldAscendinglySortedResult() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            String stateNameWiseSortedCensusData = censusAnalyser.getStateWiseSortedData(US, US_CENSUS_CSV_FILE_PATH);
+            USCensusCSV[] censusCSV = new Gson().fromJson(stateNameWiseSortedCensusData, USCensusCSV[].class);
+            Assert.assertEquals("Alabama", censusCSV[0].getState());
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
