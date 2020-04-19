@@ -4,10 +4,15 @@ public class CensusDAO {
     private String srNo;
     private String state;
     private int population;
-    private int areaInSqKm;
-    private int densityPerSqKm;
+    private double areaInSqKm;
+    private double densityPerSqKm;
     private String stateCode;
     private String tin;
+    private String stateID;
+    private double housingDensity;
+
+    public CensusDAO() {
+    }
 
     public CensusDAO(IndiaCensusCSV indiaCensusCSV) {
         this.state = indiaCensusCSV.getState();
@@ -22,6 +27,32 @@ public class CensusDAO {
         this.stateCode = indiaStateCodeCSV.getStateCode();
         this.tin = indiaStateCodeCSV.getTin();
     }
+
+    public CensusDAO(USCensusCSV usCensusCSV) {
+        this.state = usCensusCSV.getState();
+        this.population = usCensusCSV.getPopulation();
+        this.areaInSqKm = usCensusCSV.getArea();
+        this.densityPerSqKm = usCensusCSV.getPopulationDensity();
+        this.stateID = usCensusCSV.getStateID();
+        this.housingDensity = usCensusCSV.getHousingDensity();
+    }
+
+    public String getStateID() {
+        return stateID;
+    }
+
+    public void setStateID(String stateID) {
+        this.stateID = stateID;
+    }
+
+    public double getHousingDensity() {
+        return housingDensity;
+    }
+
+    public void setHousingDensity(double housingDensity) {
+        this.housingDensity = housingDensity;
+    }
+
 
     public String getSrNo() {
         return srNo;
@@ -47,7 +78,7 @@ public class CensusDAO {
         this.population = population;
     }
 
-    public int getAreaInSqKm() {
+    public double getAreaInSqKm() {
         return areaInSqKm;
     }
 
@@ -55,7 +86,7 @@ public class CensusDAO {
         this.areaInSqKm = areaInSqKm;
     }
 
-    public int getDensityPerSqKm() {
+    public double getDensityPerSqKm() {
         return densityPerSqKm;
     }
 
