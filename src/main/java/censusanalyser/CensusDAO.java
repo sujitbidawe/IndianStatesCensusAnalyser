@@ -1,6 +1,9 @@
 package censusanalyser;
 
 public class CensusDAO {
+    private double landArea;
+    private double waterArea;
+    private int housingUnits;
     private String srNo;
     private String state;
     private int population;
@@ -31,10 +34,13 @@ public class CensusDAO {
     public CensusDAO(USCensusCSV usCensusCSV) {
         this.state = usCensusCSV.getState();
         this.population = usCensusCSV.getPopulation();
-        this.areaInSqKm = usCensusCSV.getArea();
+        this.areaInSqKm = usCensusCSV.getAreaInSqKm();
         this.densityPerSqKm = usCensusCSV.getPopulationDensity();
         this.stateID = usCensusCSV.getStateID();
         this.housingDensity = usCensusCSV.getHousingDensity();
+        this.housingUnits=usCensusCSV.getHousingUnits();
+        this.waterArea = usCensusCSV.getWaterArea();
+        this.landArea = usCensusCSV.getLandArea();
     }
 
     public String getStateID() {
@@ -52,7 +58,6 @@ public class CensusDAO {
     public void setHousingDensity(double housingDensity) {
         this.housingDensity = housingDensity;
     }
-
 
     public String getSrNo() {
         return srNo;
@@ -80,6 +85,38 @@ public class CensusDAO {
 
     public double getAreaInSqKm() {
         return areaInSqKm;
+    }
+
+    public void setAreaInSqKm(double areaInSqKm) {
+        this.areaInSqKm = areaInSqKm;
+    }
+
+    public double getLandArea() {
+        return landArea;
+    }
+
+    public void setLandArea(double landArea) {
+        this.landArea = landArea;
+    }
+
+    public void setDensityPerSqKm(double densityPerSqKm) {
+        this.densityPerSqKm = densityPerSqKm;
+    }
+
+    public double getWaterArea() {
+        return waterArea;
+    }
+
+    public void setWaterArea(double waterArea) {
+        this.waterArea = waterArea;
+    }
+
+    public int getHousingUnits() {
+        return housingUnits;
+    }
+
+    public void setHousingUnits(int housingUnits) {
+        this.housingUnits = housingUnits;
     }
 
     public void setAreaInSqKm(int areaInSqKm) {
