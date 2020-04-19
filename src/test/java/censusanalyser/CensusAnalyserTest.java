@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static censusanalyser.CensusAnalyser.Country.INDIA;
-import static censusanalyser.CensusAnalyser.Country.US;
+import static censusanalyser.CountryEnum.Country.INDIA;
+import static censusanalyser.CountryEnum.Country.US;
 
 public class CensusAnalyserTest {
 
