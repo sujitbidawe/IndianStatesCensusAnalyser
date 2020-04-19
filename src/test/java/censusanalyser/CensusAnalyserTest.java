@@ -3,9 +3,6 @@ package censusanalyser;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import static censusanalyser.CensusAnalyser.Country.INDIA;
 import static censusanalyser.CensusAnalyser.Country.US;
@@ -148,6 +145,5 @@ public class CensusAnalyserTest {
         } catch (CensusAnalyserException e) {
             e.printStackTrace();
         }
-
     }
 }
